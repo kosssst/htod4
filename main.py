@@ -14,7 +14,7 @@ def create_key(key_name: str) -> None:
 def create_instance(key_name: str) -> str:
     try:
         ec2_client = boto3.client("ec2", region_name="eu-north-1")
-        instances = ec2_client.run_instances(ImageId="ami-0989fb15ce71ba39e", MinCount=1, MaxCount=1, InstanceType="t3.micro", KeyName=key_name)
+        instances = ec2_client.run_instances(ImageId="ami-0989fb15ce71ba39e", MinCount=1, MaxCount=1, InstanceType="t3.micro", KeyName=key_name, SecurityGroupIds=["sg-0d06aa5fd6fafd7db"])
         return instances["Instances"][0]["InstanceId"]
     except exceptions.ClientError:
         print(f"Invalid key name: {key_name}")
@@ -109,14 +109,5 @@ def destroy_bucket(bucket_name: str) -> None:
         print(str(e))
 
 if __name__ == "__main__":
-    # create_key("test1")
     # print(create_instance("test2"))
-    # print(get_instance_ip("i-0fc5e00c2597bbc3d"))
-    # print(get_running_instances())
-    # stop_instance('i-0fc5e00c2597bbc3d')
-    # terminate_instance("i-0fc5e00c2597bbc3d")
-    # create_bucket("bucketforbototesting2")
-    # print(list_of_buckets())
-    # upload(".gitignore", "bucketforbototesting", "git")
-    # get_file("bucketforbototesting", "git")
-    destroy_bucket("bucketforbototesting2")
+    print(get_instance_ip("i-034d84dc8dd986bc3"))
