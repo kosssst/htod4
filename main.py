@@ -108,6 +108,15 @@ def destroy_bucket(bucket_name: str) -> None:
     except Exception as e:
         print(str(e))
 
+def get_security_groups(instance_id: str) -> list:
+    ec2_client = boto3.client("ec2", region_name="eu-north-1")
+    try:
+        response = ec2_client.describe_instances(InstanceIds=[instance_id]).get("Reservations")
+        return response[0]["Instances"][0]["SecurityGroups"]
+    except Exception as e:
+        print(e)
+
 if __name__ == "__main__":
     # print(create_instance("test2"))
-    print(get_instance_ip("i-034d84dc8dd986bc3"))
+    # print(get_instance_ip("i-034d84dc8dd986bc3"))
+    print(get_security_groups("i-034d84dc8dd986bc3"))
